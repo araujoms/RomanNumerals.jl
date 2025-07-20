@@ -2,8 +2,6 @@ import Base: ==, isless, <=, <, >,
     +, -, *, ^, max, min, div, %, gcd, lcm,
     isqrt, isodd, iseven, one
 
-using Primes
-
 # Remember that RN is typealiased to RomanNumeral
 
 # Equality operators
@@ -34,13 +32,3 @@ end
 for op in [:isodd, :iseven, :isprime]
     @eval $(op)(num::RN) = $(op)(num.val)
 end
-
-# Who knew Romans did number theory
-function Primes.factor(num::RN)
-    factors = Dict{RN,RN}()
-    for (fac, mul) in factor(num.val)
-        factors[RN(fac)] = RN(mul)
-    end
-    factors
-end
-Primes.primes(num::RN) = map(RN, Primes.primes(num.val))
